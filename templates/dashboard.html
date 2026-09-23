@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard.index') }}" class="nav-brand">ShieldLink</a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard.index') }}" class="active">Dashboard</a></li>
+            <li><a href="{{ url_for('scanner.scan') }}">Scan URL</a></li>
+            <li><a href="{{ url_for('history.index') }}">History</a></li>
+            <li><a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Flash Messages Container -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome back, {{ username }}!</h1>
+            <p>Overview of your phishing URL detection statistics and recent activity.</p>
+        </div>
+
+        <!-- Statistics Cards Grid -->
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="stat-title">Total Scanned</div>
+                <div class="stat-value">{{ stats.total_scans }}</div>
+            </div>
+
+            <div class="stat-card safe">
+                <div class="stat-title">Safe URLs</div>
+                <div class="stat-value">{{ stats.safe_scans }}</div>
+            </div>
+
+            <div class="stat-card suspicious">
+                <div class="stat-title">Suspicious URLs</div>
+                <div class="stat-value">{{ stats.suspicious_scans }}</div>
+            </div>
+
+            <div class="stat-card phishing">
+                <div class="stat-title">Phishing URLs</div>
+                <div class="stat-value">{{ stats.phishing_scans }}</div>
+            </div>
+        </div>
+
+        <!-- System Overview Information Box -->
+        <div class="info-card">
+            <h2>About ShieldLink System</h2>
+            <p>
+                ShieldLink evaluates web links using feature extraction algorithms combined with Machine Learning classifiers.
+                The URL scanner module will analyze lexical structure, protocol security, domain characteristics, and high-risk keywords to assign a risk score.
+            </p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

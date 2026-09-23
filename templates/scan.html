@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Use same navigation and core styling from dashboard, plus scanner page specific styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scanner.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard.index') }}" class="nav-brand">ShieldLink</a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('scanner.scan') }}" class="active">Scan URL</a></li>
+            <li><a href="{{ url_for('history.index') }}">History</a></li>
+            <li><a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Flash Messages Container -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="scanner-container">
+        <div class="scan-card">
+            <h1>Phishing URL Scanner</h1>
+            <p>Enter any web link below to analyze it using our feature extraction model and machine learning classifier.</p>
+            
+            <!-- Client Error alert placeholder -->
+            <div id="clientError" class="alert alert-danger" style="display: none; text-align: left; margin-bottom: 20px;"></div>
+
+            <form id="scanForm" action="{{ url_for('scanner.scan') }}" method="POST" class="scan-form">
+                <input type="text" id="scanInput" name="url" class="scan-input" required placeholder="e.g. google.com, http://secure-login.net">
+                <button type="submit" id="scanButton" class="btn-scan">Scan Link</button>
+            </form>
+
+            <!-- Loading Spinner container -->
+            <div id="loadingContainer" class="loading-container">
+                <div class="spinner"></div>
+                <div class="loading-text">Extracting URL features and running ML classification...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+</body>
+</html>

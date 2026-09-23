@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scanner.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard.index') }}" class="nav-brand">ShieldLink</a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('scanner.scan') }}">Scan URL</a></li>
+            <li><a href="{{ url_for('history.index') }}">History</a></li>
+            <li><a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="scanner-container">
+        <div class="report-card">
+            
+            <div class="report-header">
+                <h1>Analysis Report</h1>
+                <p>Scanned on: {{ scan.scan_date.strftime('%Y-%m-%d %H:%M:%S') if hasattr and hasattr(scan.scan_date, 'strftime') else scan.scan_date }}</p>
+                <div class="report-url">{{ scan.url }}</div>
+            </div>
+
+            <!-- Summary Results Section -->
+            <div class="result-summary">
+                <div class="verdict-box verdict-{{ scan.prediction }}">
+                    <h2>System Verdict</h2>
+                    <div class="verdict-badge">{{ scan.prediction }}</div>
+                </div>
+
+                <div class="score-box">
+                    <h2>Risk Score</h2>
+                    <div class="score-value">{{ scan.risk_score }}%</div>
+                </div>
+            </div>
+
+            <!-- Granular Feature Explanation Table -->
+            <div class="features-section">
+                <h3>Extracted Lexical Features</h3>
+                <table class="features-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Description</th>
+                            <th>Value / Analysis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>URL Length</strong></td>
+                            <td>Length of the full URL string. Phishing URLs are often long to hide the real domain.</td>
+                            <td class="status-val">{{ features.url_length }} characters</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HTTPS Security</strong></td>
+                            <td>Legitimate sites use HTTPS to encrypt connection. Phishing sites frequently use unencrypted HTTP.</td>
+                            <td>
+                                {% if features.uses_https == 'Yes' %}
+                                    <span class="feature-status status-no">Yes (Safe)</span>
+                                {% else %}
+                                    <span class="feature-status status-yes">No (Suspicious)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>IP Address Usage</strong></td>
+                            <td>Legitimate websites resolve through domain names rather than numerical raw IP addresses.</td>
+                            <td>
+                                {% if features.uses_ip == 'Yes' %}
+                                    <span class="feature-status status-yes">Yes (Phishing)</span>
+                                {% else %}
+                                    <span class="feature-status status-no">No (Safe)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dot Count</strong></td>
+                            <td>Number of dots (`.`) present. Multiple dots are often used to camouflage subdomains.</td>
+                            <td class="status-val">{{ features.dot_count }} dots</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Subdomain Count</strong></td>
+                            <td>Total subdomains found in the domain name. Extra subdomains distract from suspicious main domains.</td>
+                            <td class="status-val">{{ features.subdomain_count }} subdomains</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'@' Symbol</strong></td>
+                            <td>The `@` symbol leads the browser to ignore preceding text, helping to spoof trusted domains.</td>
+                            <td>
+                                {% if features.has_at_symbol == 'Yes' %}
+                                    <span class="feature-status status-yes">Yes (Phishing)</span>
+                                {% else %}
+                                    <span class="feature-status status-no">No (Safe)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hyphen in Domain</strong></td>
+                            <td>Phishing sites use hyphens to look like reputable brands (e.g. `secure-paypal.com`).</td>
+                            <td>
+                                {% if features.has_hyphen_domain == 'Yes' %}
+                                    <span class="feature-status status-yes">Yes (Suspicious)</span>
+                                {% else %}
+                                    <span class="feature-status status-no">No (Safe)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>URL Shortener Service</strong></td>
+                            <td>URL shorteners mask path redirects. Commonly used to hide the ultimate malicious URL destination.</td>
+                            <td>
+                                {% if features.uses_shortener == 'Yes' %}
+                                    <span class="feature-status status-yes">Yes (Suspicious)</span>
+                                {% else %}
+                                    <span class="feature-status status-no">No (Safe)</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Suspicious Keywords</strong></td>
+                            <td>Presence of high-risk security keywords: `{{ ', '.join(features.matched_keywords) if features.matched_keywords else 'None' }}`.</td>
+                            <td class="status-val">{{ features.suspicious_keyword_count }} keyword(s) found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Navigation Footer -->
+            <div class="report-footer">
+                <a href="{{ url_for('scanner.scan') }}" class="btn-scan" style="text-decoration: none; display: inline-block;">Scan Another URL</a>
+                <a href="{{ url_for('dashboard.index') }}" class="btn-secondary">Back to Dashboard</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

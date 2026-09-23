@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard.index') }}" class="nav-brand">ShieldLink</a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('scanner.scan') }}">Scan URL</a></li>
+            <li><a href="{{ url_for('history.index') }}" class="active">History</a></li>
+            <li><a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Flash Messages Container -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="history-container">
+        <div class="history-header">
+            <h1>Your Scan History</h1>
+        </div>
+
+        <!-- Filter Toolbar -->
+        <div class="history-toolbar">
+            <!-- Server-Side Search Filter Form -->
+            <form action="{{ url_for('history.index') }}" method="GET" class="search-form">
+                <input type="text" name="q" value="{{ search_query }}" class="search-input" placeholder="Search by URL or verdict...">
+                <button type="submit" class="btn-search">Search</button>
+                {% if search_query %}
+                    <a href="{{ url_for('history.index') }}" class="btn-clear">Clear</a>
+                {% endif %}
+            </form>
+            
+            <!-- Export CSV button -->
+            <a href="{{ url_for('history.export_csv') }}" class="btn-export">Export to CSV</a>
+        </div>
+
+        <!-- History Grid Data Card -->
+        <div class="table-card">
+            {% if scans %}
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Scan Date</th>
+                            <th>URL</th>
+                            <th>Verdict</th>
+                            <th>Risk Score</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for scan in scans %}
+                            <tr>
+                                <td>{{ scan.scan_date.strftime('%Y-%m-%d %H:%M:%S') if hasattr and hasattr(scan.scan_date, 'strftime') else scan.scan_date }}</td>
+                                <td class="url-col" title="{{ scan.url }}">{{ scan.url }}</td>
+                                <td>
+                                    <span class="verdict-pill verdict-{{ scan.prediction }}">{{ scan.prediction }}</span>
+                                </td>
+                                <td><strong>{{ scan.risk_score }}%</strong></td>
+                                <td>
+                                    <div class="action-links">
+                                        <a href="{{ url_for('scanner.report', scan_id=scan.id) }}" class="btn-view">View Report</a>
+                                        
+                                        <!-- Post Form trigger for Deletion (includes Confirmation trigger in history.js) -->
+                                        <form action="{{ url_for('history.delete_scan', scan_id=scan.id) }}" method="POST" class="delete-form" style="display:inline;">
+                                            <button type="submit" class="btn-delete">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="empty-state">
+                    <p>No scan history found.</p>
+                    {% if not search_query %}
+                        <a href="{{ url_for('scanner.scan') }}" class="btn-scan" style="text-decoration: none; display: inline-block;">Scan a URL Now</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+</body>
+</html>
