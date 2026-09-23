@@ -1,4 +1,4 @@
-/* ShieldLink Glassmorphism Scanner & Report Styles */
+/* ShieldLink Clean Light Theme - Scanner & Report Styles */
 
 * {
     box-sizing: border-box;
@@ -8,8 +8,8 @@
 }
 
 body {
-    background: radial-gradient(ellipse at top, #1e1b4b 0%, #0f172a 60%, #020617 100%);
-    color: #f8fafc;
+    background: #f8fafc;
+    color: #0f172a;
     min-height: 100vh;
 }
 
@@ -24,13 +24,11 @@ body {
 
 /* Scanner Form Card */
 .scan-card {
-    background: rgba(30, 41, 59, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
     padding: 40px 32px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
     text-align: center;
     margin-bottom: 28px;
 }
@@ -39,13 +37,13 @@ body {
     font-family: 'Outfit', sans-serif;
     font-size: 28px;
     font-weight: 800;
-    color: #f8fafc;
+    color: #0f172a;
     margin-bottom: 10px;
 }
 
 .scan-card p {
     font-size: 15px;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 28px;
 }
 
@@ -62,22 +60,21 @@ body {
     min-width: 300px;
     padding: 14px 18px;
     font-size: 15px;
-    color: #f8fafc;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #0f172a;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
     border-radius: 10px;
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .scan-input::placeholder {
-    color: #64748b;
+    color: #94a3b8;
 }
 
 .scan-input:focus {
-    border-color: #6366f1;
-    background: rgba(15, 23, 42, 0.8);
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.35);
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .btn-scan {
@@ -85,18 +82,18 @@ body {
     font-size: 15px;
     font-weight: 700;
     color: #ffffff;
-    background: linear-gradient(135deg, #2563eb 0%, #6366f1 100%);
+    background: #2563eb;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: all 0.2s ease;
 }
 
 .btn-scan:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-    background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 100%);
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
 }
 
 /* Spinner / Loader */
@@ -107,8 +104,8 @@ body {
 }
 
 .spinner {
-    border: 4px solid rgba(255, 255, 255, 0.1);
-    border-top: 4px solid #6366f1;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #2563eb;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -123,24 +120,22 @@ body {
 
 .loading-text {
     font-size: 14px;
-    color: #94a3b8;
+    color: #64748b;
     font-weight: 500;
 }
 
 /* Report Layout */
 .report-card {
-    background: rgba(30, 41, 59, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
     padding: 36px 32px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
     margin-bottom: 28px;
 }
 
 .report-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #e2e8f0;
     padding-bottom: 24px;
     margin-bottom: 28px;
 }
@@ -149,25 +144,26 @@ body {
     font-family: 'Outfit', sans-serif;
     font-size: 26px;
     font-weight: 800;
-    color: #f8fafc;
+    color: #0f172a;
     margin-bottom: 6px;
 }
 
 .report-header p {
     font-size: 13px;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 12px;
 }
 
 .report-url {
     font-size: 14px;
     word-break: break-all;
-    color: #60a5fa;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
     padding: 10px 14px;
     border-radius: 8px;
     font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
 }
 
 /* Verdict and Score Layout */
@@ -185,48 +181,46 @@ body {
     padding: 28px;
     border-radius: 14px;
     text-align: center;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 }
 
 .verdict-box h2 {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 8px;
     font-weight: 700;
 }
 
 .verdict-badge {
     font-family: 'Outfit', sans-serif;
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 800;
 }
 
 .verdict-Safe {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
 }
 
 .verdict-Suspicious {
-    background-color: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background-color: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
 }
 
 .verdict-Phishing {
-    background-color: rgba(239, 68, 68, 0.15);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
 }
 
 .score-box {
     flex: 1;
     min-width: 220px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 14px;
     padding: 28px;
     text-align: center;
@@ -234,7 +228,7 @@ body {
 
 .score-box h2 {
     font-size: 12px;
-    color: #94a3b8;
+    color: #64748b;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 8px;
@@ -243,9 +237,9 @@ body {
 
 .score-value {
     font-family: 'Outfit', sans-serif;
-    font-size: 40px;
+    font-size: 38px;
     font-weight: 800;
-    color: #f8fafc;
+    color: #0f172a;
 }
 
 /* Features Table styling */
@@ -253,7 +247,7 @@ body {
     font-family: 'Outfit', sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #f8fafc;
+    color: #0f172a;
     margin-bottom: 18px;
 }
 
@@ -266,14 +260,14 @@ body {
 .features-table th, .features-table td {
     padding: 14px 18px;
     text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid #e2e8f0;
     font-size: 14px;
 }
 
 .features-table th {
-    background-color: rgba(15, 23, 42, 0.5);
+    background-color: #f8fafc;
     font-weight: 600;
-    color: #cbd5e1;
+    color: #475569;
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -288,19 +282,19 @@ body {
 }
 
 .status-yes {
-    background-color: rgba(239, 68, 68, 0.2);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
 }
 
 .status-no {
-    background-color: rgba(16, 185, 129, 0.2);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
 }
 
 .status-val {
-    color: #f8fafc;
+    color: #0f172a;
     font-weight: 600;
 }
 
@@ -317,15 +311,16 @@ body {
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    color: #f8fafc;
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #334155;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
     border-radius: 10px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    border-color: #94a3b8;
 }
