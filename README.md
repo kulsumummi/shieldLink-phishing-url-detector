@@ -212,6 +212,6 @@ Open your browser and visit: **`http://127.0.0.1:5000`**
 
 ## 👨‍💻 Author & Repository Info
 
-**Kulsum Ummi**  
+**Ummi Kulsum**  
 - **GitHub Repository:** [kulsumummi/shieldLink-phishing-url-detector](https://github.com/kulsumummi/shieldLink-phishing-url-detector)
 - **Live Demo Link:** [https://shieldlink-phishing-url-detector.onrender.com](https://shieldlink-phishing-url-detector.onrender.com)
