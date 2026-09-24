@@ -1,12 +1,13 @@
 # 🛡️ ShieldLink – AI-Powered Phishing URL Detection System
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-onrender.com-2ea44f?style=for-the-badge&logo=render)](https://shieldlink-phishing-url-detector.onrender.com)
+[![Domain](https://img.shields.io/badge/Domain-AI_%26_Machine_Learning-7F52FF?style=for-the-badge&logo=brain&logoColor=white)](https://shieldlink-phishing-url-detector.onrender.com)
 [![Python](https://img.shields.io/badge/Python-3.13%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Flask-3.0%2B-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit_Learn-1.5%2B-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.0%2B-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Deployment](https://img.shields.io/badge/Deployed_on-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://shieldlink-phishing-url-detector.onrender.com)
 
-> **ShieldLink** is an end-to-end web security application that performs real-time URL risk assessment using a hybrid machine learning classifier (Random Forest) and a custom 9-dimensional lexical feature extractor.
+> **ShieldLink** is an applied **Artificial Intelligence & Machine Learning** web security application that performs real-time URL risk assessment using a hybrid machine learning classifier (Random Forest) and a custom 9-dimensional lexical feature engineering pipeline.
 
 ---
 
@@ -15,38 +16,41 @@
 
 ---
 
-## 📌 Executive Summary & Key Engineering Highlights
+## 📌 Executive Summary & Key AI/ML Highlights
 
-Designed and developed as a complete full-stack cyber security showcase, **ShieldLink** solves the challenge of real-time malicious link detection without relying on slow external third-party API lookups. By extracting structural and lexical signatures directly from raw URL strings, the application evaluates link safety in under **50 milliseconds**.
+Designed and developed as an applied **Artificial Intelligence & Machine Learning** engineering capstone project, **ShieldLink** addresses the critical cybersecurity challenge of real-time malicious link detection without relying on latency-heavy third-party API lookups. 
 
-### 🌟 Technical Highlights for Recruiters
-- **Hybrid Inference Engine**: Integrates a **Random Forest Classifier** trained on synthetic heuristic dataset distributions with a deterministic rule engine to eliminate false negatives on high-risk vectors (e.g. raw IP hostnames and shorteners).
-- **Custom Feature Engineering Engine**: Transforms raw URL strings into a 9-dimensional feature matrix evaluating token distributions, protocol status, dot-stuffing, subdomain depth, and suspicious target keywords.
-- **Resilient Dual-Database Architecture**: Built with an automatic database failover system — seamlessly switching between enterprise **MySQL** and a zero-configuration local **SQLite** (`shieldlink.db`) backend.
-- **Production-Grade Security**: Implements salted password hashing (`werkzeug.security`), strict session guards across endpoints, and parameterized SQL queries to prevent OWASP Top 10 vulnerabilities (SQLi, XSS, Session Hijacking).
-- **Modern Clean Light UI**: Responsive, zero-framework, human-designed frontend built with vanilla HTML5, modern CSS flexbox/grid, and DOM JavaScript.
-- **Production WSGI Deployment**: Deployed on Render using **Gunicorn** for multi-threaded concurrent request handling.
+By performing numerical feature extraction on raw URL strings and feeding them into an optimized Supervised Learning pipeline (`RandomForestClassifier`), the application delivers sub-**50 millisecond inference** with transparent feature breakdown reports.
+
+### 🌟 AI & ML Technical Highlights for Recruiters
+- **Supervised Machine Learning Pipeline**: Built using `scikit-learn` with a tuned `RandomForestClassifier` (`n_estimators=100`, `max_depth=8`), evaluated across classification metrics (Precision, Recall, F1-Score).
+- **Domain-Specific Feature Engineering**: Custom NLP/lexical parser (`model/feature_extractor.py`) that converts unstructured URL strings into a 9-dimensional numerical feature vector.
+- **Dataset Synthesis & Heuristic Design**: Synthetic dataset generator (`model/train_model.py`) creating balanced distributions of safe vs. phishing URL patterns (IP hosts, domain spoofing, dot-stuffing, shorteners).
+- **Hybrid AI Inference Engine**: Merges ML model class probabilities (`predict_proba`) with deterministic safety heuristics to eliminate false negatives on extreme risk vectors.
+- **Model Serialization & Production Serving**: Automated model training and artifact serialization (`phishing_model.pkl` via `joblib`), seamlessly integrated into a live web application backend.
+- **Full-Stack AI Application Engineering**: Production deployment on Render using Gunicorn WSGI, Flask modular Blueprints, and a resilient dual-database layer (MySQL + local SQLite fallback).
 
 ---
 
-## 🔄 Technical Architecture & System Pipeline
+## 🔄 AI Inference Architecture & System Pipeline
 
 ```text
                +---------------------------------------------------+
-               |               User Input (Target URL)             |
+               |            Raw Input URL (Unstructured)           |
                +---------------------------------------------------+
                                          |
                                          v
                +---------------------------------------------------+
-               |    Lexical Feature Extractor Engine (9 Features)  |
-               | (Length, IP Host, Shortener, Dots, Keywords, etc.)|
+               |      Lexical Feature Extractor Module             |
+               | (9-Dimensional Numerical Feature Matrix Engine)   |
                +---------------------------------------------------+
                                          |
                                          v
                +---------------------------------------------------+
-               |       Hybrid Machine Learning Pipeline            |
-               |  - Random Forest Classifier (Class & Probability) |
-               |  - Deterministic Rule Overrides (IP / Shorteners) |
+               |        Supervised ML Classifier Engine            |
+               |  - Scikit-Learn RandomForestClassifier Inference  |
+               |  - Probability Estimation via predict_proba()     |
+               |  - Deterministic Safety Rule Overrides            |
                +---------------------------------------------------+
                                          |
                                          v
@@ -57,15 +61,15 @@ Designed and developed as a complete full-stack cyber security showcase, **Shiel
                                          |
                                          v
                +---------------------------------------------------+
-               |     Data Persistence Layer (SQLite / MySQL)       |
+               |      Data Persistence (SQLite / MySQL Driver)     |
                +---------------------------------------------------+
                                          |
                      +-------------------+-------------------+
                      |                                       |
                      v                                       v
       +-----------------------------+         +-----------------------------+
-      |  Detailed Analysis Report   |         | Analytics Dashboard & Logs  |
-      | (Breakdown Table & Visuals) |         | (CSV Export & History Search)|
+      |  Itemized Feature Breakdown |         | Analytics Dashboard & Logs  |
+      | (XAI & Transparency Report) |         | (CSV Export & History Search)|
       +-----------------------------+         +-----------------------------+
 ```
 
@@ -73,121 +77,92 @@ Designed and developed as a complete full-stack cyber security showcase, **Shiel
 
 ## 🔬 Machine Learning Feature Engineering Matrix
 
-The feature extraction module (`model/feature_extractor.py`) parses target URLs into **9 distinct numerical indicators**:
+The feature extraction module (`model/feature_extractor.py`) parses raw URLs into **9 numerical ML features**:
 
-| # | Feature Name | Extraction Logic | Cyber Threat Rationale |
+| # | Feature Name | Representation / Math | AI Security Rationale |
 | :-: | :--- | :--- | :--- |
-| **1** | **URL Length** | Character length `len(url)` | Malicious links use excessive length (>75 chars) to mask destinations. |
-| **2** | **HTTPS Protocol** | Binary check for `https://` scheme | Absence of SSL/TLS indicates unencrypted / untrusted transport. |
-| **3** | **IP Hostname** | IPv4 / IPv6 validation via `ipaddress` | Phishers frequently host landers directly on raw IP addresses. |
-| **4** | **Dot Count** | Count of `.` occurrences in string | High dot counts indicate dot-stuffing and complex directory masking. |
-| **5** | **Subdomain Depth** | Hostname token split `len(parts) - 2` | Stacking nested subdomains mimics trusted target brands. |
-| **6** | **At-Symbol (`@`)** | Binary check for `@` symbol | Browser RFC syntax uses `@` to discard preceding credentials. |
-| **7** | **Hyphen in Host** | Domain string inspection for `-` | Typosquatting and domain spoofing routinely use hyphens. |
-| **8** | **URL Shortener** | Domain comparison against known shortener registry | Shorteners conceal destination hostnames from user hover inspection. |
-| **9** | **Suspicious Keywords** | Match count of target keywords (`login`, `secure`, `bank`, etc.) | High concentration of credential-harvesting tokens. |
+| **1** | **URL Length** | $L = \text{len}(\text{url})$ | Malicious links exhibit high character length ($L > 75$) to conceal destinations. |
+| **2** | **HTTPS Protocol** | $x_2 \in \{0, 1\}$ | Binary indicator of SSL/TLS transport encryption scheme. |
+| **3** | **IP Hostname** | $x_3 \in \{0, 1\}$ | Binary indicator of IPv4/IPv6 host address vs registered domain name. |
+| **4** | **Dot Count** | $x_4 = \text{count}(`.`)$ | High dot frequency correlates with directory masking and sub-domain abuse. |
+| **5** | **Subdomain Depth** | $d = \max(0, \text{len}(\text{parts}) - 2)$ | Deep subdomain hierarchy is used to spoof brand authority. |
+| **6** | **At-Symbol (`@`)** | $x_6 \in \{0, 1\}$ | RFC syntax feature where `@` discards prior user credentials. |
+| **7** | **Hyphen in Domain** | $x_7 \in \{0, 1\}$ | Binary marker for typosquatting / lookalike domain hyphenation. |
+| **8** | **URL Shortener** | $x_8 \in \{0, 1\}$ | Lookup against URL shortener registry concealing destination host. |
+| **9** | **Suspicious Keywords** | $k = \sum \mathbb{I}(\text{keyword} \in \text{URL})$ | Count matching high-risk target tokens (`login`, `secure`, `bank`, etc.). |
 
 ---
 
 ## 🛠️ Full Technology Stack
 
-| Domain | Technology / Library | Usage & Purpose |
+| Domain | Technology / Library | Usage & AI/ML Purpose |
 | :--- | :--- | :--- |
-| **Language** | **Python 3.13** | Primary backend and machine learning language |
-| **Web Framework** | **Flask 3.0+** | Modular application architecture using Blueprints (`auth`, `dashboard`, `scanner`, `history`) |
-| **Machine Learning** | **Scikit-Learn, NumPy, Joblib** | `RandomForestClassifier` pipeline and model serialization |
-| **Production WSGI** | **Gunicorn, Waitress** | Enterprise-grade WSGI web server for cloud deployment |
-| **Database Layer** | **SQLite3 / MySQL** | Dual-engine persistence layer with automatic failover query wrapper |
-| **Security** | **Werkzeug Security** | Salted password hashing (`pbkdf2:sha256`) and session management |
-| **Frontend UI** | **HTML5, CSS3, JavaScript** | Clean modern light-mode interface (Flexbox, CSS Grid, DOM Manipulation) |
-| **Cloud Hosting** | **Render** | Automated CI/CD pipeline from GitHub repository |
+| **Primary Language** | **Python 3.13** | Core language for AI/ML modeling and web framework |
+| **Machine Learning** | **Scikit-Learn, NumPy, Joblib** | `RandomForestClassifier`, matrix ops, model serialization |
+| **Web Framework** | **Flask 3.0+** | RESTful/Modular backend integration for live ML inference |
+| **Production Server** | **Gunicorn, Waitress** | Production WSGI server for serving AI model endpoints |
+| **Database Layer** | **SQLite3 / MySQL** | Dual-engine persistence layer with automatic failover wrapper |
+| **Security & Auth** | **Werkzeug Security** | Salted password hashing (`pbkdf2:sha256`) and session security |
+| **Frontend UI** | **HTML5, CSS3, JavaScript** | Modern light-mode interface for visualizing ML predictions & reports |
+| **Cloud Deployment** | **Render** | Cloud hosting platform with automated build and deployment |
 
 ---
 
-## 📂 Modular Codebase Structure
+## 📂 Codebase Structure & ML Artifacts
 
 ```text
 shieldLink-phishing-url-detector/
 │
-├── app.py                      # Flask Application Entry Point & Blueprint Registrar
+├── app.py                      # Flask Application Entry Point & Web Server Controller
 ├── config.py                   # Environment & Configuration Management
-├── requirements.txt            # Python Dependency Specification
-├── Procfile                    # Gunicorn Production WSGI Process File
+├── requirements.txt            # Python Dependency Manifest
+├── Procfile                    # Production Gunicorn WSGI Server Command
 ├── render.yaml                 # One-click Render Cloud Deployment Blueprint
 ├── README.md                   # Project Documentation
-├── shieldlink.db               # SQLite Local Database (Auto-instantiated on startup)
-│
-├── database/
-│   ├── database.py             # Dual Database Driver (MySQL + SQLite Failover Engine)
-│   └── schema.sql              # MySQL DDL Relational Schema Script
+├── shieldlink.db               # Local SQLite Database (Auto-created on startup)
 │
 ├── model/
-│   ├── feature_extractor.py    # 9-Dimensional Lexical URL Parsing Engine
-│   ├── train_model.py          # Dataset Synthesizer & Random Forest Trainer Script
+│   ├── feature_extractor.py    # 9-Dimensional Feature Engineering Module
+│   ├── train_model.py          # Synthetic Data Generator & ML Training Pipeline
 │   └── phishing_model.pkl       # Serialized Random Forest Classifier Artifact
 │
-├── routes/
-│   ├── auth.py                 # Registration, Login, Logout & Password Security Controller
-│   ├── dashboard.py            # User Analytics & Metrics Controller
-│   ├── scanner.py              # URL Submission, ML Inference & Risk Scoring Controller
-│   └── history.py              # Scan Audit Log, Search Filter & CSV Export Controller
+├── database/
+│   ├── database.py             # Dual DB Helper (MySQL + SQLite Failover Engine)
+│   └── schema.sql              # MySQL Database Schema DDL
 │
-├── templates/                  # Jinja2 HTML Templates
-│   ├── login.html              # Clean Authentication View
-│   ├── register.html           # User Registration View
+├── routes/
+│   ├── auth.py                 # User Authentication & Security Endpoints
+│   ├── dashboard.py            # Analytics Metrics Controller
+│   ├── scanner.py              # ML Model Inference & Risk Scoring Controller
+│   └── history.py              # Scan History, Search Filter & CSV Export Controller
+│
+├── templates/                  # Jinja2 Frontend Templates
+│   ├── login.html              # Login Interface
+│   ├── register.html           # User Registration Interface
 │   ├── dashboard.html          # Dynamic Analytics Dashboard
-│   ├── scan.html               # URL Input & Analysis Scanner
-│   ├── report.html             # Itemized Feature Breakdown Report
-│   └── history.html            # Searchable Audit History Table
+│   ├── scan.html               # Interactive URL Scanner View
+│   ├── report.html             # Explainable AI (XAI) Feature Report
+│   └── history.html            # Searchable Scan History Table
 │
 └── static/
-    ├── css/                    # Clean Light Mode CSS Stylesheets (auth, dashboard, scanner, history)
-    └── js/                     # Client-side Interactive DOM Scripts
+    ├── css/                    # Modern Light Mode CSS Stylesheets
+    └── js/                     # Client-Side Interactions & Loader Scripts
 ```
 
 ---
 
-## ✨ Features & User Capabilities
+## 🧪 Model Evaluation & Test Benchmarks
 
-### 🔐 1. Authentication & Security
-- User registration and login flow with salted password hashing.
-- Route protection via session authorization middleware.
-- Flash notification feedback for user interactions.
-
-### 🔍 2. Real-Time URL Scanner
-- Interactive URL submission form with syntax validation and loading indicators.
-- Real-time feature extraction and machine learning classification.
-- Color-coded verdict indicators:
-  - 🟢 **Safe** (Risk Score < 35%)
-  - 🟡 **Suspicious** (Risk Score 35% – 70%)
-  - 🔴 **Phishing** (Risk Score > 70%)
-
-### 📊 3. Executive Dashboard Analytics
-- Dynamic statistics cards calculating:
-  - Total Scans Performed
-  - Total Safe URLs Detected
-  - Total Suspicious Links Flagged
-  - Total Phishing Threats Blocked
-
-### 📜 4. Audit History & Data Export
-- Filterable history table with real-time string search query filtering (`?q=...`).
-- Individual scan deletion capability.
-- Instant **CSV spreadsheet download** export for security audit logging.
-
----
-
-## 🧪 Sample Evaluation Benchmark
-
-| Target URL Input | Expected Verdict | Risk Score | Key Extracted Signatures |
+| Test URL Input | Classification Verdict | Risk Score | Extracted Feature Signature |
 | :--- | :-: | :-: | :--- |
-| `https://google.com/search?q=python` | 🟢 **Safe** | **5% – 15%** | Valid HTTPS, Recognized Domain, No Suspicious Tokens |
-| `http://192.168.1.1/login` | 🔴 **Phishing** | **85% – 100%** | Raw IP Host, HTTP Protocol, Keyword `login` |
-| `http://bit.ly/xY7z` | 🟡 **Suspicious** | **45% – 65%** | Shortener Domain, HTTP Protocol |
-| `http://login.verification.paypal.com.update-account.tk/signin` | 🔴 **Phishing** | **90% – 100%** | Dot-stuffing, 4 Subdomains, Multiple Phishing Keywords |
+| `https://google.com/search?q=python` | 🟢 **Safe** | **5% – 15%** | Valid HTTPS, Standard Domain, Zero Risk Tokens |
+| `http://192.168.1.1/login` | 🔴 **Phishing** | **85% – 100%** | Raw IP Host, HTTP Scheme, Keyword `login` |
+| `http://bit.ly/xY7z` | 🟡 **Suspicious** | **45% – 65%** | Shortener Registry Domain, HTTP Scheme |
+| `http://login.verification.paypal.com.update-account.tk/signin` | 🔴 **Phishing** | **90% – 100%** | Dot-stuffing, 4 Subdomains, Multiple Phishing Tokens |
 
 ---
 
-## ⚙️ Local Setup & Execution Guide
+## ⚙️ Local Setup & Model Training Guide
 
 ### Prerequisites
 - **Python 3.8+** (Python 3.13 recommended)
@@ -218,12 +193,13 @@ shieldLink-phishing-url-detector/
    pip install -r requirements.txt
    ```
 
-4. **Verify / Train Machine Learning Model:**
+4. **Train Machine Learning Model:**
+   Generate synthetic URL dataset and train/serialize `phishing_model.pkl`:
    ```bash
    python model/train_model.py
    ```
 
-5. **Launch Flask Server:**
+5. **Launch Application:**
    ```bash
    python app.py
    ```
@@ -233,9 +209,9 @@ shieldLink-phishing-url-detector/
 
 ---
 
-## 🌐 Cloud Deployment (Render)
+## 🌐 Cloud Deployment
 
-ShieldLink is pre-configured for instant deployment on **Render**:
+The repository includes pre-configured deployment blueprints for **Render**:
 
 - **Build Command:** `pip install -r requirements.txt && python model/train_model.py`
 - **Start Command:** `gunicorn app:app`
@@ -243,16 +219,16 @@ ShieldLink is pre-configured for instant deployment on **Render**:
 
 ---
 
-## 🔐 Security & Disclaimer
+## 🔐 Disclaimer & Future Extensions
 
-- **Portfolio & Academic Purpose**: Built as a computer science engineering portfolio project. The underlying Random Forest model is trained on representative synthetic heuristic distributions.
-- **Production Integration**: For enterprise deployment, this service can be paired with active WHOIS domain age queries, Google Safe Browsing API checks, and DNS blacklists.
+- **Academic & AI Portfolio Project**: Built to demonstrate practical application of Supervised Learning, Feature Engineering, and ML Model Serving.
+- **Future AI Extensions**: Integration of Deep Learning models (LSTM / Transformer-based sequence classifiers for raw URL character embeddings) and WHOIS domain age features.
 
 ---
 
 ## 👨‍💻 Author & Contact
 
 **Kulsum Ummi**  
-*Computer Science & Engineering*  
+*Artificial Intelligence & Machine Learning (AI & ML) Engineering*  
 - **GitHub**: [@kulsumummi](https://github.com/kulsumummi)  
-- **Live Project**: [ShieldLink Application](https://shieldlink-phishing-url-detector.onrender.com)
+- **Live Project**: [ShieldLink Live AI Application](https://shieldlink-phishing-url-detector.onrender.com)
